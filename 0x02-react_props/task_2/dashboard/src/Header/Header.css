@@ -1,14 +1,18 @@
-.header {
-    display: flex;
-    color: #e0344a;
-    align-items: center;
-    border-bottom: thick solid #e0344a;
+.App-header {
+  display: flex;
+  align-items: center;
+  border-bottom: 3px solid #E0354B;
+  margin-bottom: 60px;
+  top: 190px;
+  position: relative;
 }
-  
-.header img {
-    width: 144px;
+
+.App-header img {
+  width: 160px;
+  height: 160px;
+
 }
-  
-.header h1 {
-    margin: 0;
+
+.App-header h1 {
+  color: #E0354B;
 }
