@@ -67,7 +67,7 @@ By the end of this project, you'll be able to:
 
 #### Author
 This project was written by Hassan Boudraa.
-- **Email**: [hassan.boudraa@example.com](mailto:hassan.boudraa@example.com)
+- **Email**: [hassan.hbmama@gmail.com](mailto:hassan.hbmama@gmail.com)
 - **WhatsApp**: [+212622283559](https://wa.me/212622283559)
 
 ---
