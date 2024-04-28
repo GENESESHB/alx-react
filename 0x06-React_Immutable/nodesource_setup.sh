@@ -94,9 +94,12 @@ node_deprecation_warning() {
           "X${NODENAME}" == "XNode.js 8.x LTS Carbon" ||
           "X${NODENAME}" == "XNode.js 9.x" ||
           "X${NODENAME}" == "XNode.js 10.x" ||
-          "X${NODENAME}" == "XNode.js 11.x" ||
+          "X${NODENAME}" == "XNode.js 11.x" || 
+          "X${NODENAME}" == "XNode.js 12.x" ||
           "X${NODENAME}" == "XNode.js 13.x" ||
-          "X${NODENAME}" == "XNode.js 15.x" ]]; then
+          "X${NODENAME}" == "XNode.js 14.x" ||
+          "X${NODENAME}" == "XNode.js 15.x" ||
+          "X${NODENAME}" == "XNode.js 17.x" ]]; then
 
         print_bold \
 "                            DEPRECATION WARNING                            " "\
@@ -108,9 +111,10 @@ ${bold}${NODENAME} is no longer actively supported!${normal}
   Use the installation script that corresponds to the version of Node.js you
   wish to install. e.g.
 
-   * ${green}https://deb.nodesource.com/setup_12.x — Node.js 12 LTS \"Erbium\"${normal}
-   * ${green}https://deb.nodesource.com/setup_14.x — Node.js 14 LTS \"Fermium\"${normal} (recommended)
    * ${green}https://deb.nodesource.com/setup_16.x — Node.js 16 \"Gallium\"${normal}
+   * ${green}https://deb.nodesource.com/setup_18.x — Node.js 18 LTS \"Hydrogen\"${normal} (recommended)
+   * ${green}https://deb.nodesource.com/setup_19.x — Node.js 19 \"Nineteen\"${normal}
+   * ${green}https://deb.nodesource.com/setup_20.x — Node.js 20 \"Iron\"${normal} (current)
 
   Please see ${bold}https://github.com/nodejs/Release${normal} for details about which
   version may be appropriate for you.
@@ -137,9 +141,10 @@ This script, located at ${bold}https://deb.nodesource.com/setup${normal}, used t
   You should use the script that corresponds to the version of Node.js you
   wish to install. e.g.
 
-   * ${green}https://deb.nodesource.com/setup_12.x — Node.js 12 LTS \"Erbium\"${normal}
-   * ${green}https://deb.nodesource.com/setup_14.x — Node.js 14 LTS \"Fermium\"${normal} (recommended)
    * ${green}https://deb.nodesource.com/setup_16.x — Node.js 16 \"Gallium\"${normal}
+   * ${green}https://deb.nodesource.com/setup_18.x — Node.js 18 LTS \"Hydrogen\"${normal} (recommended)
+   * ${green}https://deb.nodesource.com/setup_19.x — Node.js 19 \"Nineteen\"${normal}
+   * ${green}https://deb.nodesource.com/setup_20.x — Node.js 20 \"Iron\"${normal} (current)
 
   Please see ${bold}https://github.com/nodejs/Release${normal} for details about which
   version may be appropriate for you.
@@ -157,10 +162,57 @@ This script, located at ${bold}https://deb.nodesource.com/setup${normal}, used t
     fi
 }
 
+print_bold_deprecation() {
+    title="$1"
+    text="$2"
+
+    echo
+    echo "${bold}${red}================================================================================${normal}"
+    echo "${bold}${red}▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓${normal}"
+    echo "${bold}${red}================================================================================${normal}"
+    echo
+    echo -e "  ${bold}${yellow}${title}${normal}"
+    echo
+    echo -en "  ${text}"
+    echo
+    echo "${bold}${red}================================================================================${normal}"
+    echo "${bold}${red}▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓${normal}"
+    echo "${bold}${red}================================================================================${normal}"
+}
+
+
+repo_deprecation_warning() {
+  print_bold_deprecation \
+"                         ${underline}SCRIPT DEPRECATION WARNING${normal}                    " "\
+
+  This script, located at ${bold}https://deb.nodesource.com/setup_X${normal}, used to
+  install Node.js is deprecated now and will eventually be made inactive.
+
+  Please visit the NodeSource ${bold}distributions${normal} Github and follow the
+  instructions to migrate your repo.
+  ${underline}${green}${bold}https://github.com/nodesource/distributions${normal}
+
+  The ${bold}NodeSource${normal} Node.js Linux distributions GitHub repository contains
+  information about which versions of Node.js and which Linux distributions
+  are supported and how to install it.
+  ${underline}${green}${bold}https://github.com/nodesource/distributions${normal}
+
+
+                          ${underline}${bold}${yellow}SCRIPT DEPRECATION WARNING${normal}
+"
+
+        echo
+        echo "${cyan}${bold}TO AVOID THIS WAIT MIGRATE THE SCRIPT${normal}"
+        echo "Continuing in 60 seconds (press Ctrl-C to abort) ..."
+        echo
+        sleep 60
+}
+
 setup() {
 
 script_deprecation_warning
 node_deprecation_warning
+repo_deprecation_warning
 
 print_status "Installing the NodeSource ${NODENAME} repo..."
 
@@ -220,65 +272,82 @@ check_alt() {
     fi
 }
 
-check_alt "SolydXK"       "solydxk-9" "Debian" "stretch"
-check_alt "Kali"          "sana"     "Debian" "jessie"
-check_alt "Kali"          "kali-rolling" "Debian" "bullseye"
-check_alt "Sparky Linux"  "Tyche"    "Debian" "stretch"
-check_alt "Sparky Linux"  "Nibiru"   "Debian" "buster"
-check_alt "MX Linux 17"   "Horizon"  "Debian" "stretch"
-check_alt "MX Linux 18"   "Continuum" "Debian" "stretch"
-check_alt "MX Linux 19"   "patito feo" "Debian" "buster"
-check_alt "Linux Mint"    "maya"     "Ubuntu" "precise"
-check_alt "Linux Mint"    "qiana"    "Ubuntu" "trusty"
-check_alt "Linux Mint"    "rafaela"  "Ubuntu" "trusty"
-check_alt "Linux Mint"    "rebecca"  "Ubuntu" "trusty"
-check_alt "Linux Mint"    "rosa"     "Ubuntu" "trusty"
-check_alt "Linux Mint"    "sarah"    "Ubuntu" "xenial"
-check_alt "Linux Mint"    "serena"   "Ubuntu" "xenial"
-check_alt "Linux Mint"    "sonya"    "Ubuntu" "xenial"
-check_alt "Linux Mint"    "sylvia"   "Ubuntu" "xenial"
-check_alt "Linux Mint"    "tara"     "Ubuntu" "bionic"
-check_alt "Linux Mint"    "tessa"    "Ubuntu" "bionic"
-check_alt "Linux Mint"    "tina"     "Ubuntu" "bionic"
-check_alt "Linux Mint"    "tricia"   "Ubuntu" "bionic"
-check_alt "Linux Mint"    "ulyana"   "Ubuntu" "focal"
-check_alt "Linux Mint"    "ulyssa"   "Ubuntu" "focal"
-check_alt "Linux Mint"    "uma"      "Ubuntu" "focal"
-check_alt "LMDE"          "betsy"    "Debian" "jessie"
-check_alt "LMDE"          "cindy"    "Debian" "stretch"
-check_alt "LMDE"          "debbie"   "Debian" "buster"
-check_alt "elementaryOS"  "luna"     "Ubuntu" "precise"
-check_alt "elementaryOS"  "freya"    "Ubuntu" "trusty"
-check_alt "elementaryOS"  "loki"     "Ubuntu" "xenial"
-check_alt "elementaryOS"  "juno"     "Ubuntu" "bionic"
-check_alt "elementaryOS"  "hera"     "Ubuntu" "bionic"
-check_alt "elementaryOS"  "odin"     "Ubuntu" "focal"
-check_alt "Trisquel"      "toutatis" "Ubuntu" "precise"
-check_alt "Trisquel"      "belenos"  "Ubuntu" "trusty"
-check_alt "Trisquel"      "flidas"   "Ubuntu" "xenial"
-check_alt "Trisquel"      "etiona"   "Ubuntu" "bionic"
-check_alt "Uruk GNU/Linux" "lugalbanda" "Ubuntu" "xenial"
-check_alt "BOSS"          "anokha"   "Debian" "wheezy"
-check_alt "BOSS"          "anoop"    "Debian" "jessie"
-check_alt "BOSS"          "drishti"  "Debian" "stretch"
-check_alt "BOSS"          "unnati"   "Debian" "buster"
-check_alt "bunsenlabs"    "bunsen-hydrogen" "Debian" "jessie"
-check_alt "bunsenlabs"    "helium"   "Debian" "stretch"
-check_alt "bunsenlabs"    "lithium"  "Debian" "buster"
-check_alt "Tanglu"        "chromodoris" "Debian" "jessie"
-check_alt "PureOS"        "green"    "Debian" "sid"
-check_alt "PureOS"        "amber"    "Debian" "buster"
-check_alt "Devuan"        "jessie"   "Debian" "jessie"
-check_alt "Devuan"        "ascii"    "Debian" "stretch"
-check_alt "Devuan"        "beowulf"  "Debian" "buster"
-check_alt "Devuan"        "ceres"    "Debian" "sid"
-check_alt "Deepin"        "panda"    "Debian" "sid"
-check_alt "Deepin"        "unstable" "Debian" "sid"
-check_alt "Deepin"        "stable"   "Debian" "buster"
-check_alt "Pardus"        "onyedi"   "Debian" "stretch"
-check_alt "Liquid Lemur"  "lemur-3"  "Debian" "stretch"
-check_alt "Astra Linux"   "orel"     "Debian" "stretch"
-check_alt "Ubilinux"      "dolcetto" "Debian" "stretch"
+check_alt "Astra Linux"    "orel"            "Debian"        "stretch"
+check_alt "BOSS"           "anokha"          "Debian"        "wheezy"
+check_alt "BOSS"           "anoop"           "Debian"        "jessie"
+check_alt "BOSS"           "drishti"         "Debian"        "stretch"
+check_alt "BOSS"           "unnati"          "Debian"        "buster"
+check_alt "BOSS"           "urja"            "Debian"        "bullseye"
+check_alt "bunsenlabs"     "bunsen-hydrogen" "Debian"        "jessie"
+check_alt "bunsenlabs"     "helium"          "Debian"        "stretch"
+check_alt "bunsenlabs"     "lithium"         "Debian"        "buster"
+check_alt "Devuan"         "jessie"          "Debian"        "jessie"
+check_alt "Devuan"         "ascii"           "Debian"        "stretch"
+check_alt "Devuan"         "beowulf"         "Debian"        "buster"
+check_alt "Devuan"         "chimaera"        "Debian"        "bullseye"
+check_alt "Devuan"         "ceres"           "Debian"        "sid"
+check_alt "Devuan"         "daedalus"        "Debian"        "bookworm"
+check_alt "Deepin"         "panda"           "Debian"        "sid"
+check_alt "Deepin"         "unstable"        "Debian"        "sid"
+check_alt "Deepin"         "stable"          "Debian"        "buster"
+check_alt "Deepin"         "apricot"         "Debian"        "buster"
+check_alt "Deepin"         "beige"           "Debian"        "bookworm"
+check_alt "elementaryOS"   "luna"            "Ubuntu"        "precise"
+check_alt "elementaryOS"   "freya"           "Ubuntu"        "trusty"
+check_alt "elementaryOS"   "loki"            "Ubuntu"        "xenial"
+check_alt "elementaryOS"   "juno"            "Ubuntu"        "bionic"
+check_alt "elementaryOS"   "hera"            "Ubuntu"        "bionic"
+check_alt "elementaryOS"   "odin"            "Ubuntu"        "focal"
+check_alt "elementaryOS"   "jolnir"          "Ubuntu"        "focal"
+check_alt "elementaryOS"   "horus"           "Ubuntu"        "jammy"
+check_alt "Kali"           "sana"            "Debian"        "jessie"
+check_alt "Kali"           "kali-rolling"    "Debian"        "bullseye"
+check_alt "Linux Mint"     "maya"            "Ubuntu"        "precise"
+check_alt "Linux Mint"     "qiana"           "Ubuntu"        "trusty"
+check_alt "Linux Mint"     "rafaela"         "Ubuntu"        "trusty"
+check_alt "Linux Mint"     "rebecca"         "Ubuntu"        "trusty"
+check_alt "Linux Mint"     "rosa"            "Ubuntu"        "trusty"
+check_alt "Linux Mint"     "sarah"           "Ubuntu"        "xenial"
+check_alt "Linux Mint"     "serena"          "Ubuntu"        "xenial"
+check_alt "Linux Mint"     "sonya"           "Ubuntu"        "xenial"
+check_alt "Linux Mint"     "sylvia"          "Ubuntu"        "xenial"
+check_alt "Linux Mint"     "tara"            "Ubuntu"        "bionic"
+check_alt "Linux Mint"     "tessa"           "Ubuntu"        "bionic"
+check_alt "Linux Mint"     "tina"            "Ubuntu"        "bionic"
+check_alt "Linux Mint"     "tricia"          "Ubuntu"        "bionic"
+check_alt "Linux Mint"     "ulyana"          "Ubuntu"        "focal"
+check_alt "Linux Mint"     "ulyssa"          "Ubuntu"        "focal"
+check_alt "Linux Mint"     "uma"             "Ubuntu"        "focal"
+check_alt "Linux Mint"     "una"             "Ubuntu"        "focal"
+check_alt "Linux Mint"     "vanessa"         "Ubuntu"        "jammy"
+check_alt "Linux Mint"     "vera"            "Ubuntu"        "jammy"
+check_alt "Linux Mint"     "victoria"        "Ubuntu"        "jammy"
+check_alt "Liquid Lemur"   "lemur-3"         "Debian"        "stretch"
+check_alt "LMDE"           "betsy"           "Debian"        "jessie"
+check_alt "LMDE"           "cindy"           "Debian"        "stretch"
+check_alt "LMDE"           "debbie"          "Debian"        "buster"
+check_alt "LMDE"           "elsie"           "Debian"        "bullseye"
+check_alt "MX Linux 17"    "Horizon"         "Debian"        "stretch"
+check_alt "MX Linux 18"    "Continuum"       "Debian"        "stretch"
+check_alt "MX Linux 19"    "patito feo"      "Debian"        "buster"
+check_alt "MX Linux 21"    "wildflower"      "Debian"        "bullseye"
+check_alt "OpenKylin"      "yangtze "        "Debian"        "bookworm"
+check_alt "Pardus"         "onyedi"          "Debian"        "stretch"
+check_alt "Parrot"         "ara"             "Debian"        "bullseye"
+check_alt "PureOS"         "green"           "Debian"        "sid"
+check_alt "PureOS"         "amber"           "Debian"        "buster"
+check_alt "PureOS"         "byzantium"       "Debian"        "bullseye"
+check_alt "SolydXK"        "solydxk-9"       "Debian"        "stretch"
+check_alt "Sparky Linux"   "Tyche"           "Debian"        "stretch"
+check_alt "Sparky Linux"   "Nibiru"          "Debian"        "buster"
+check_alt "Sparky Linux"   "Po-Tolo"         "Debian"        "bullseye"
+check_alt "Tanglu"         "chromodoris"     "Debian"        "jessie"
+check_alt "Trisquel"       "toutatis"        "Ubuntu"        "precise"
+check_alt "Trisquel"       "belenos"         "Ubuntu"        "trusty"
+check_alt "Trisquel"       "flidas"          "Ubuntu"        "xenial"
+check_alt "Trisquel"       "etiona"          "Ubuntu"        "bionic"
+check_alt "Ubilinux"       "dolcetto"        "Debian"        "stretch"
+check_alt "Uruk GNU/Linux" "lugalbanda"      "Ubuntu"        "xenial"
 
 if [ "X${DISTRO}" == "Xdebian" ]; then
   print_status "Unknown Debian-based distribution, checking /etc/debian_version..."
